@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<link href='http://fonts.googleapis.com/css?family=Averia+Sans+Libre' rel='stylesheet' type='text/css'>
+<title>wishbox</title>
+</head>
+
+<body>
+	<div style="position: relative; margin-top: 300px;"
+		id="wishboxContainer">
+		<div id="wishboxLabelDiv">
+			<h1 style="text-align: center;">
+				<span id= "textLogo" style="font-size: 56px;"><span
+					style="font-family: averia sans libre; color:#102F55">WISHBOX</span></span>
+			</h1>
+		</div>
+		<div class="form-wrapper cf" id="boxContainer">
+			<input type="text" id="wishbox" placeholder="wishbox it..." required>
+			<button type="submit" id="getit">Get it</button>
+		</div>
+	</div>
+	<ul id="all-rests">
+	</ul>
+	
+	
+	<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.11.4.min.js"></script>
+	<script src="main.js"></script>
+	<script>
+		$("#textLogo").click(function() {
+			window.location = "index.html";
+		});
+		$("#wishbox").keypress(function(e) {
+			if (e.which == 13) {
+				doMagic();
+			}
+		});
+		$("#getit").click(function() {
+			doMagic();
+		});
+		$('#all-rests').on('click', 'li', function(){
+			showConfirmation(this);
+		});
+		$(document).ready(function() {
+			if(localStorage.getItem('isCancelled') === 'yes'){
+				var dataItems = localStorage.getItem('filledList').toString();
+				//console.log(localStorage.getItem('filledList'));
+				var someText = dataItems.replace(/(\r\n|\n|\r)/gm,"");
+				//console.log(someText);
+				//$("#all-rests").html(localStorage.getItem('filledList'));
+				$("#all-rests").html(someText);
+				$("#all-rests").children().show();
+				$("#wishboxContainer").animate({
+					'margin-top' : '0px'
+				},10);
+				localStorage.setItem('isCancelled', 'no');
+			}
+		});
+		$('#all-rests').on('click', '.nobubble', function(event){
+		    event.stopImmediatePropagation();
+		});
+	</script>
+</body>
+</html>

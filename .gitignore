@@ -1,0 +1,8 @@
+/build/
+/.settings/
+/.classpath
+/.project
+/resources/menus.json
+/resources/rests.json
+/resources/resturls.json
+/resources/temp.json

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Confirmation</title>
+<link rel="stylesheet" type="text/css" href="main.css">
+<script src="main.js"></script>
+<script type="text/javascript" src="jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="jquery-ui-1.11.4.min.js"></script>
+</head>
+<body>
+	<div id="orderDetailContainer">
+		<h1 class="confirmOrder">Confirm Order</h1>
+		<div class="post-container" id="orderDetails">
+			<div class="post-thumb">
+				<img id='logo' src="">
+			</div>
+			<div class="order">
+				<span>You ordered </span>
+				<h3 id="title" class="order-title"></h3>
+				<div class="fromSpanDiv">
+					<span> from </span> <a id="business" target="_blank"></a><span>	for </span>
+					<span id="price"></span>
+				</div>
+				<div class="confirmCancelDiv">
+					<button class="orderButton" type="submit" id="confirm">Confirm</button>
+					<button class="orderButton" type="submit" id="cancel">Cancel</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function() {
+			$("#orderDetails").find("#title").text(localStorage.getItem("title"));
+			$("#orderDetails").find("#business").text(localStorage.getItem("business"));
+			$("#orderDetails").find("#price").text(localStorage.getItem("price"));
+			$("#orderDetails").find("#logo").attr('src',localStorage.getItem("logoUrl"));
+		});
+		
+		$("#confirm").click(function() {
+			localStorage.setItem('isCancelled', 'no');
+			var orderPlaced = "<h1 class=\"order-placed-title\"> Your order has been placed </h1>";
+			var okButton = "<button class=\"orderButton\" type=\"submit\" id=\"okButton\">Ok</button>";
+			var redirecting = "<p class=\"redirecting\"> Redirecting in <span id=\"countDown\">5<\span></p>"
+			$('#orderDetailContainer').html(orderPlaced + okButton + redirecting);
+			countDownTimer();
+			setTimeout(function() {
+				window.location = "index.html";
+			}, 5000);
+		});
+		$(document).on('click', '#okButton', function() {
+			window.location = "index.html";
+		});
+		
+		function countDownTimer(){
+			var count=5;
+			var counter=setInterval(timer, 1000); //1000 will  run it every 1 second
+
+			function timer()
+			{
+			  count=count-1;
+			  if (count <= 0) {
+			     clearInterval(counter);
+			     return;
+			  }
+			  $("#countDown").text(count);
+			}
+		}
+		
+		$("#cancel").click(function() {
+			localStorage.setItem('isCancelled', 'yes');
+			window.location = "index.html";
+		});
+		
+	</script>
+</body>
+</html>
